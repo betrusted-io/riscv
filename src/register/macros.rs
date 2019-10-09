@@ -118,31 +118,31 @@ macro_rules! write_csr {
     };
 }
 
-macro_rules! write_csr_rv32 {
-    ($csr_number:expr, $asm_fn: ident) => {
-        /// Writes the CSR
-        #[inline]
-        #[allow(unused_variables)]
-        unsafe fn _write(bits: usize) {
-            match () {
-                #[cfg(all(riscv32, feature = "inline-asm"))]
-                () => asm!("csrrw x0, $1, $0" :: "r"(bits), "i"($csr_number) :: "volatile"),
+// macro_rules! write_csr_rv32 {
+//     ($csr_number:expr, $asm_fn: ident) => {
+//         /// Writes the CSR
+//         #[inline]
+//         #[allow(unused_variables)]
+//         unsafe fn _write(bits: usize) {
+//             match () {
+//                 #[cfg(all(riscv32, feature = "inline-asm"))]
+//                 () => asm!("csrrw x0, $1, $0" :: "r"(bits), "i"($csr_number) :: "volatile"),
 
-                #[cfg(all(riscv32, not(feature = "inline-asm")))]
-                () => {
-                    extern "C" {
-                        fn $asm_fn(bits: usize);
-                    }
+//                 #[cfg(all(riscv32, not(feature = "inline-asm")))]
+//                 () => {
+//                     extern "C" {
+//                         fn $asm_fn(bits: usize);
+//                     }
 
-                    $asm_fn(bits);
-                }
+//                     $asm_fn(bits);
+//                 }
 
-                #[cfg(not(riscv32))]
-                () => unimplemented!(),
-            }
-        }
-    };
-}
+//                 #[cfg(not(riscv32))]
+//                 () => unimplemented!(),
+//             }
+//         }
+//     };
+// }
 
 macro_rules! write_csr_as_usize {
     ($csr_number:expr, $asm_fn: ident) => {
@@ -156,17 +156,17 @@ macro_rules! write_csr_as_usize {
     };
 }
 
-macro_rules! write_csr_as_usize_rv32 {
-    ($csr_number:expr, $asm_fn: ident) => {
-        write_csr_rv32!($csr_number, $asm_fn);
+// macro_rules! write_csr_as_usize_rv32 {
+//     ($csr_number:expr, $asm_fn: ident) => {
+//         write_csr_rv32!($csr_number, $asm_fn);
 
-        /// Writes the CSR
-        #[inline]
-        pub fn write(bits: usize) {
-            unsafe{ _write(bits) }
-        }
-    };
-}
+//         /// Writes the CSR
+//         #[inline]
+//         pub fn write(bits: usize) {
+//             unsafe{ _write(bits) }
+//         }
+//     };
+// }
 
 macro_rules! set {
     ($csr_number:expr, $asm_fn: ident) => {
