@@ -1,10 +1,10 @@
 [package]
 name = "riscv"
-version = "0.5.4"
-repository = "https://github.com/rust-embedded/riscv"
-authors = ["The RISC-V Team <risc-v@teams.rust-embedded.org>"]
+version = "0.5.5"
+repository = "https://github.com/betrusted-io/riscv"
+authors = ["Sean Cross <sean@xobs.io>", "The RISC-V Team <risc-v@teams.rust-embedded.org>"]
 categories = ["embedded", "hardware-support", "no-std"]
-description = "Low level access to RISC-V processors"
+description = "Low level access to RISC-V processors for xoulon"
 keywords = ["riscv", "register", "peripheral"]
 license = "ISC"
 
